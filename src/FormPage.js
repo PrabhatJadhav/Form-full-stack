@@ -232,4 +232,4 @@ function FormPage() {
 
 export default FormPage;
 
-// <form onSubmit={postData} action="http://localhost:5000/" method="post">
+
