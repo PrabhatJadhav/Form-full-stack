@@ -4,7 +4,9 @@ import FormPage from "./FormPage";
 function App() {
   return (
     <div className="App">
-      <FormPage />
+      <div className="container-main">
+        <FormPage />
+      </div>
     </div>
   );
 }

@@ -6,12 +6,12 @@ function FormPage() {
     username: "",
     id: "",
     age: "",
-    dept: "",
+    dept: "HR",
   });
   const [updtEmData, setupdtEmData] = useState({
     username: "",
     newUsername: "",
-    newDept: "",
+    newDept: "HR",
   });
   const [delEmData, setdelEmData] = useState({
     username: "",
@@ -38,73 +38,97 @@ function FormPage() {
     // console.log(newEmData);
     const { username, id, age, dept } = newEmData;
 
-    const res = await fetch("http://localhost:4000/users/new", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        Username: username,
-        Id: id,
-        Age: age,
-        Department: dept,
-      }),
-    });
+    if (username !== "" && id !== "" && age !== "") {
+      const res = await fetch("http://localhost:4000/users/new", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          Username: username,
+          Id: id,
+          Age: age,
+          Department: dept,
+        }),
+      });
 
-    const finalRes = await res.json();
-    console.log(finalRes);
+      const finalRes = await res.json();
+      console.log(finalRes);
+      if (finalRes.acknowledged === true) {
+        alert("New Employee added successfully.");
+      } else {
+        alert("All fields must be filled");
+      }
 
-    setnewEmData({
-      username: "",
-      id: "",
-      age: "",
-      dept: "",
-    });
+      setnewEmData({
+        username: "",
+        id: "",
+        age: "",
+        dept: "",
+      });
+    } else {
+      alert("All fields must be filled");
+      // console.log(newEmData);
+    }
   };
 
   const updateEmData = async (e) => {
     e.preventDefault();
     const { username, newUsername, newDept } = updtEmData;
 
-    const res = await fetch("http://localhost:4000/users/updt", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        Username: username,
-        NewUsername: newUsername,
-        NewDepartment: newDept,
-      }),
-    });
+    if (username !== "" && newUsername !== "") {
+      const res = await fetch("http://localhost:4000/users/updt", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          Username: username,
+          NewUsername: newUsername,
+          NewDepartment: newDept,
+        }),
+      });
 
-    const finalRes = await res.json();
-    console.log(finalRes);
+      const finalRes = await res.json();
+      console.log(finalRes);
+      alert("Updated successfully.");
 
-    setupdtEmData({
-      username: "",
-      newUsername: "",
-      newDept: "",
-    });
+      setupdtEmData({
+        username: "",
+        newUsername: "",
+        newDept: "",
+      });
+    } else {
+      alert("Update unsuccessful, try again.");
+    }
   };
 
   const deleteEmData = async (e) => {
     e.preventDefault();
     const username = delEmData.username;
 
-    const res = await fetch("http://localhost:4000/users/del", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "DELETE",
-      body: JSON.stringify({
-        Username: username,
-      }),
-    });
+    if (username !== "") {
+      const res = await fetch("http://localhost:4000/users/del", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "DELETE",
+        body: JSON.stringify({
+          Username: username,
+        }),
+      });
 
-    const finalRes = await res.json();
-    console.log(finalRes);
-    setdelEmData({ username: "" });
+      const finalRes = await res.json();
+      console.log(finalRes);
+      if (finalRes.deletedCount !== 0) {
+        alert("Deleted successfully.");
+        setdelEmData({ username: "" });
+      } else {
+        alert("Couldn't delete, try again.");
+      }
+    } else {
+      alert("Couldn't delete, try again.");
+    }
   };
 
   return (
