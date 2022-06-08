@@ -1,0 +1,20 @@
+{
+  "name": "men",
+  "version": "1.0.0",
+  "description": "first node project",
+  "main": "first.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Prabhat",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "bootstrap": "^5.1.3",
+    "console-log-colors": "^0.2.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongodb": "^4.6.0",
+    "upper-case": "^2.0.2"
+  }
+}
